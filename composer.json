@@ -20,6 +20,16 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^11.5"
+        "phpunit/phpunit": "^11.5",
+        "squizlabs/php_codesniffer": "^4.0"
+    },
+    "scripts": {
+        "tests": "phpunit --stop-on-error --stop-on-failure --stop-on-risky --colors=always",
+        "tests:check": "@tests --testdox",
+        "tests:coverage:xml": "phpunit --stop-on-error --stop-on-failure --coverage-clover phpunit.coverage.xml",
+        "phpcs:check": "phpcs --colors -s",
+        "phpcs:fix": "phpcbf --colors -s",
+        "phpcs:check-summary": "phpcs --report=summary -p",
+        "phpcs:fix-summary": "phpcbf --report=summary -p"
     }
 }

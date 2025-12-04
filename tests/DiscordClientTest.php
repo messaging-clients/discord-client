@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 class DiscordClientTest extends TestCase
 {
     #[Test]
-    public function test_example(): void
+    public function testExample(): void
     {
         $client = new DiscordClient();
         $this->assertTrue(true);
