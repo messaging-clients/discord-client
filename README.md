@@ -1,7 +1,7 @@
 <p align="center">
-<a href="https://github.com/easy-http/discord-client/actions/workflows/tests.yml"><img src="https://github.com/easy-http/discord-client/actions/workflows/tests.yml/badge.svg?branch=1.x" alt="Build Status"></a>
-<a href="https://sonarcloud.io/component_measures?metric=reliability_rating&branch=1.x&id=easy-http_discord-client"><img src="https://sonarcloud.io/api/project_badges/measure?project=easy-http_discord-client&metric=reliability_rating&branch=1.x" alt="Bugs"></a>
-<a href="https://sonarcloud.io/component_measures?metric=coverage&branch=1.x&id=easy-http_discord-client"><img src="https://sonarcloud.io/api/project_badges/measure?project=easy-http_discord-client&metric=coverage&branch=1.x" alt="Bugs"></a>
+<a href="https://github.com/easy-http/discord-client/actions/workflows/tests.yml"><img src="https://github.com/easy-http/discord-client/actions/workflows/tests.yml/badge.svg?branch=main" alt="Build Status"></a>
+<a href="https://sonarcloud.io/component_measures?metric=reliability_rating&branch=main&id=easy-http_discord-client"><img src="https://sonarcloud.io/api/project_badges/measure?project=easy-http_discord-client&metric=reliability_rating&branch=main" alt="Bugs"></a>
+<a href="https://sonarcloud.io/component_measures?metric=coverage&branch=main&id=easy-http_discord-client"><img src="https://sonarcloud.io/api/project_badges/measure?project=easy-http_discord-client&metric=coverage&branch=main" alt="Bugs"></a>
 </p>
 <p align="center">
     <a href="#tada-php-support" title="PHP Versions Supported"><img alt="PHP Versions Supported" src="https://img.shields.io/badge/php-8.2%20to%208.4-777bb3.svg?logo=php&logoColor=white&labelColor=555555"></a>
