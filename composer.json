@@ -21,7 +21,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5",
-        "squizlabs/php_codesniffer": "^4.0"
+        "squizlabs/php_codesniffer": "^4.0",
+        "fakerphp/faker": "^1.24"
     },
     "scripts": {
         "tests": "phpunit --stop-on-error --stop-on-failure --stop-on-risky --colors=always",
@@ -31,5 +32,9 @@
         "phpcs:fix": "phpcbf --colors -s",
         "phpcs:check-summary": "phpcs --report=summary -p",
         "phpcs:fix-summary": "phpcbf --report=summary -p"
+    },
+    "require": {
+        "easy-http/guzzle-adapter": "^2.0",
+        "easy-http/mock-builder": "^1.3"
     }
 }
