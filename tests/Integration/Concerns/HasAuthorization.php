@@ -1,30 +1,32 @@
 <?php
 
-namespace Tests\EasyHttp\DiscordClient\Integration;
+namespace Tests\EasyHttp\DiscordClient\Integration\Concerns;
 
 use EasyHttp\DiscordClient\Authorization;
+use EasyHttp\DiscordClient\Constants\AuthorizationType;
 use EasyHttp\DiscordClient\DiscordClient;
 use EasyHttp\DiscordClient\Exceptions\MissingAuthorizationTypeException;
 use EasyHttp\DiscordClient\Exceptions\MissingTokenException;
 use EasyHttp\MockBuilder\HttpMock;
+use Faker\Factory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 
 #[CoversClass(DiscordClient::class)]
-class DiscordClientTest extends IntegrationTestCase
+trait HasAuthorization
 {
+    abstract protected function invokeEndpoint(DiscordClient $client): void;
+
     #[Test]
     public function itThrowsAnExceptionWhenTokenIsMissing(): void
     {
         $this->expectException(MissingTokenException::class);
         $this->expectExceptionMessage('Authorization token is not set.');
 
-        $message = $this->faker->sentence();
-        $channelId = $this->faker->uuid;
-
         $client = new DiscordClient(new Authorization());
         $client->withHandler(new HttpMock($this->builder));
-        $client->createMessage($channelId, $message);
+
+        $this->invokeEndpoint($client);
     }
 
     #[Test]
@@ -33,13 +35,30 @@ class DiscordClientTest extends IntegrationTestCase
         $this->expectException(MissingAuthorizationTypeException::class);
         $this->expectExceptionMessage('Authorization type is not set.');
 
-        $message = $this->faker->sentence();
-        $channelId = $this->faker->uuid;
-
         $authorization = new Authorization();
         $authorization->setToken($this->faker->sha1);
         $client = new DiscordClient($authorization);
-        $client->withHandler(new HttpMock($this->builder));
-        $client->createMessage($channelId, $message);
+
+        $this->invokeEndpoint($client);
+    }
+
+    public static function authorizationProvider(): array
+    {
+        $faker = Factory::create();
+        // phpcs:ignore Zend.NamingConventions.ValidVariableName.ContainsNumbers
+        $bearerToken = $faker->sha1;
+        // phpcs:ignore Zend.NamingConventions.ValidVariableName.ContainsNumbers
+        $botToken = $faker->sha1;
+
+        $bearerAuthorization = new Authorization();
+        $bearerAuthorization->setAuthorization(AuthorizationType::BEARER_TOKEN, $bearerToken);
+
+        $botAuthorization = new Authorization();
+        $botAuthorization->setAuthorization(AuthorizationType::BOT_TOKEN, $botToken);
+
+        return [
+            'Bearer Token' => [$bearerAuthorization],
+            'Bot Token' => [$botAuthorization],
+        ];
     }
 }
