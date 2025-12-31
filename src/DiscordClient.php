@@ -59,4 +59,69 @@ class DiscordClient
 
         return $this->client->execute();
     }
+
+    /**
+     * @param string $applicationId
+     * @param array $commands
+     * @return HttpClientResponse
+     * @throws MissingAuthorizationTypeException
+     * @throws MissingTokenException
+     */
+    public function bulkGlobalApplicationCommands(string $applicationId, array $commands): HttpClientResponse
+    {
+        $this->client
+            ->prepareRequest(
+                'PUT',
+                $this->baseUri . '/applications/' . $applicationId . '/commands'
+            )
+            ->setHeader('Content-Type', 'application/json');
+
+        $this->withAuthorization();
+
+        $this->client->getRequest()->setJson($commands);
+
+        return $this->client->execute();
+    }
+
+    protected function setBearerToken(string $token): HttpClientRequest
+    {
+        return $this->client->getRequest()
+            ->setHeader('Authorization', 'Bearer ' . $token);
+    }
+
+    protected function setBotToken(string $token): HttpClientRequest
+    {
+        return $this->client->getRequest()
+            ->setHeader('Authorization', 'Bot ' . $token);
+    }
+
+    /**
+     * @throws MissingTokenException
+     * @throws MissingAuthorizationTypeException
+     */
+    protected function withAuthorization(): self
+    {
+        if (!$this->authorization->hasToken()) {
+            throw new MissingTokenException('Authorization token is not set.');
+        }
+
+        if (!$this->authorization->hasAuthorizationType()) {
+            throw new MissingAuthorizationTypeException('Authorization type is not set.');
+        }
+
+        switch ($this->authorization->getAuthorizationType()) {
+            case AuthorizationType::BEARER_TOKEN:
+                $this->setBearerToken($this->authorization->getToken());
+                break;
+            case AuthorizationType::BOT_TOKEN:
+                $this->setBotToken($this->authorization->getToken());
+                break;
+            default:
+                throw new \InvalidArgumentException(
+                    'Unsupported auth type: ' . $this->authorization->getAuthorizationType()->value
+                );
+        }
+
+        return $this;
+    }
 }
