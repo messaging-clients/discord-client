@@ -22,6 +22,50 @@ class GlobalCommandsTest extends IntegrationTestCase
 
     #[Test]
     #[DataProvider('authorizationProvider')]
+    public function itCanGetGlobalApplicationCommands(Authorization $authorization): void
+    {
+        $applicationId = $this->faker->numerify('###################');
+        $commandId = $this->faker->numerify('###################');
+        $name = $this->faker->word();
+
+        $this->builder
+            ->when()
+                ->methodIs('GET')
+                ->pathMatch('/api\/v10\/applications\/' . $applicationId . '\/commands' . '/')
+            ->then()
+                ->statusCode(200)
+                ->json(
+                    $jsonResponse = [
+                        [
+                            'id' => $commandId,
+                            'application_id' => $applicationId,
+                            'version' => $this->faker->numerify('###################'),
+                            'name' => $name,
+                            'description' => 'A test command',
+                            'type' => 1,
+                            'integration_types' => [
+                                IntegrationType::GUILD_INSTALL->value,
+                                IntegrationType::USER_INSTALL->value
+                            ],
+                            'contexts' => [
+                                InteractionContextType::GUILD->value,
+                                InteractionContextType::BOT_DM->value,
+                                InteractionContextType::PRIVATE_CHANNEL->value
+                            ]
+                        ]
+                    ]
+                );
+
+        $client = new DiscordClient($authorization);
+        $client->withHandler(new HttpMock($this->builder));
+        $response = $client->getGlobalApplicationCommands($applicationId);
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame($jsonResponse, $response->parseJson());
+    }
+
+    #[Test]
+    #[DataProvider('authorizationProvider')]
     public function itCanBulkOverwriteGlobalApplicationCommands(Authorization $authorization)
     {
         $name = $this->faker->word();
@@ -76,14 +120,6 @@ class GlobalCommandsTest extends IntegrationTestCase
     protected function invokeEndpoint(DiscordClient $client): void
     {
         $applicationId = $this->faker->numerify('###################');
-        $commands = [
-            [
-                'name' => $this->faker->word(),
-                'description' => 'A command created via PHP SDK',
-                'type' => 1,
-            ]
-        ];
-
-        $client->bulkGlobalApplicationCommands($applicationId, $commands);
+        $client->getGlobalApplicationCommands($applicationId);
     }
 }
