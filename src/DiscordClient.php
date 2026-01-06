@@ -61,6 +61,26 @@ class DiscordClient
     }
 
     /**
+     * Returns the user object of the requester's account.
+     *
+     * When used with a bot token, this returns the bot user.
+     * When used with a bearer token, this returns the user that authorized the token.
+     *
+     * @return HttpClientResponse
+     * @throws MissingTokenException|MissingAuthorizationTypeException
+     */
+    public function getCurrentUser(): HttpClientResponse
+    {
+        $this->client
+            ->prepareRequest('GET', $this->baseUri . '/users/@me')
+            ->setHeader('Content-Type', 'application/json');
+
+        $this->withAuthorization();
+
+        return $this->client->execute();
+    }
+
+    /**
      * @param string $applicationId
      * @param array $commands
      * @return HttpClientResponse
