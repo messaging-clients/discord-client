@@ -81,6 +81,28 @@ class DiscordClient
     }
 
     /**
+     * Returns all global application commands for your application.
+     *
+     * @param string $applicationId
+     * @return HttpClientResponse
+     * @throws MissingAuthorizationTypeException
+     * @throws MissingTokenException
+     */
+    public function getGlobalApplicationCommands(string $applicationId): HttpClientResponse
+    {
+        $this->client
+            ->prepareRequest(
+                'GET',
+                $this->baseUri . '/applications/' . $applicationId . '/commands'
+            )
+            ->setHeader('Content-Type', 'application/json');
+
+        $this->withAuthorization();
+
+        return $this->client->execute();
+    }
+
+    /**
      * @param string $applicationId
      * @param array $commands
      * @return HttpClientResponse
