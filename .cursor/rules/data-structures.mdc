@@ -1,0 +1,147 @@
+---
+alwaysApply: true
+---
+
+# Data Structures Design Principles
+
+This document outlines when to use flexible data structures (arrays) versus structured types (enums, classes) in the DiscordClient library.
+
+## Flexible Data Structures for Endpoint Parameters
+
+**IMPORTANT**: When passing parameters to Discord API endpoints, prefer accepting flexible data structures (arrays) and passing them directly as JSON, rather than requiring specific typed parameters for each field.
+
+### Why This Approach for Endpoint Parameters
+
+- **Minimal Maintenance**: Discord API can add/modify fields without requiring library updates
+- **Maximum Flexibility**: Consumers have full control over the payload structure
+- **Future-Proof**: New API fields are automatically supported without code changes
+- **Simpler Implementation**: Less validation, less code, fewer breaking changes
+
+### Example - Preferred Approach for Endpoint Parameters
+
+```php
+// ✅ GOOD: Accept array and pass directly as JSON
+public function bulkGlobalApplicationCommands(string $applicationId, array $commands): HttpClientResponse
+{
+    $this->client
+        ->prepareRequest('PUT', $this->baseUri . '/applications/' . $applicationId . '/commands')
+        ->setHeader('Content-Type', 'application/json');
+
+    $this->withAuthorization();
+
+    $this->client->getRequest()->setJson($commands);
+
+    return $this->client->execute();
+}
+```
+
+### Example - Avoid This for Endpoint Parameters
+
+```php
+// ❌ BAD: Requiring specific typed parameters for each field
+public function bulkGlobalApplicationCommands(
+    string $applicationId,
+    string $name,
+    string $description,
+    int $type,
+    array $integrationTypes,
+    array $contexts
+): HttpClientResponse
+{
+    // This approach requires updates when Discord adds new fields
+    // and limits consumer flexibility
+}
+```
+
+### Guidelines for Endpoint Parameters
+
+When implementing endpoints that send data to Discord:
+- **Accept `array` parameters** for complex request payloads
+- **Pass the array directly** to `setJson()` without transformation
+- **Let consumers structure** the data according to Discord's API documentation
+- **Only use specific typed parameters** for simple, required path/query parameters (e.g., IDs, simple strings)
+
+## Structured Types for Common API Options
+
+**IMPORTANT**: While endpoint parameters should be flexible, structured types (enums) are preferred for common API options and constants that are used across multiple endpoints or represent well-defined API concepts.
+
+### Why Structured Types for Common Options
+
+- **Type Safety**: Enums provide compile-time type checking
+- **Discoverability**: IDE autocomplete helps developers find available options
+- **Documentation**: Enum cases can include PHPDoc explaining each option
+- **Consistency**: Ensures consistent usage across the codebase
+- **Refactoring**: Easier to rename or modify options when needed
+
+### Example - Preferred Approach for Common Options
+
+```php
+// ✅ GOOD: Use enums for well-defined API constants
+namespace EasyHttp\DiscordClient\Constants;
+
+enum InteractionContextType: int
+{
+    /**
+     * Interaction can be used within servers (guilds)
+     */
+    case GUILD = 0;
+
+    /**
+     * Interaction can be used within DMs with the app's bot user
+     */
+    case BOT_DM = 1;
+
+    /**
+     * Interaction can be used within Group DMs and DMs other than the app's bot user
+     */
+    case PRIVATE_CHANNEL = 2;
+}
+
+enum IntegrationType: int
+{
+    case GUILD_INSTALL = 0;
+    case USER_INSTALL = 1;
+}
+
+enum AuthorizationType: int
+{
+    case BEARER_TOKEN = 1;
+    case BOT_TOKEN = 2;
+}
+```
+
+### When to Use Structured Types
+
+Create enums in `src/Constants/` when:
+- The values represent **well-defined API concepts** used across multiple endpoints
+- The options are **stable** and unlikely to change frequently
+- **Type safety** and **discoverability** provide value to consumers
+- The values are used in **multiple places** (not just one endpoint)
+
+Examples of good enum candidates:
+- Authorization types (`AuthorizationType`)
+- Integration types (`IntegrationType`)
+- Interaction context types (`InteractionContextType`)
+- HTTP methods (if used internally)
+- Common status codes or flags
+
+### When NOT to Use Structured Types
+
+Avoid creating enums for:
+- **Endpoint-specific payload fields** that vary per endpoint
+- **Dynamic data** that changes frequently
+- **Complex nested structures** that should remain flexible
+- **Single-use constants** that are only used in one place
+
+## Summary
+
+| Use Case | Preferred Approach | Example |
+|----------|-------------------|---------|
+| **Endpoint request payloads** | Flexible arrays | `array $commands` passed directly to `setJson()` |
+| **Path/query parameters** | Simple typed parameters | `string $applicationId`, `int $limit` |
+| **Common API constants** | Structured enums | `InteractionContextType`, `AuthorizationType` |
+| **Single-use values** | Flexible arrays or simple types | Endpoint-specific fields in request body |
+
+## Key Takeaway
+
+**Flexible arrays for endpoint parameters, structured enums for common API options.** This balance provides both flexibility where needed and type safety where it adds value.
