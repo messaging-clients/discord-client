@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\EasyHttp\DiscordClient\Unit;
+namespace Tests\MessagingClients\DiscordClient\Unit;
 
-use EasyHttp\DiscordClient\Authorization;
-use EasyHttp\DiscordClient\Constants\AuthorizationType;
+use MessagingClients\DiscordClient\Authorization;
+use MessagingClients\DiscordClient\Constants\AuthorizationType;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\EasyHttp\DiscordClient\Unit\UnitTestCase;
+use Tests\MessagingClients\DiscordClient\Unit\UnitTestCase;
 
 #[CoversClass(Authorization::class)]
 class AuthorizationTest extends UnitTestCase

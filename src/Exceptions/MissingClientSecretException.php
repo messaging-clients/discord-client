@@ -1,6 +1,6 @@
 <?php
 
-namespace EasyHttp\DiscordClient\Exceptions;
+namespace MessagingClients\DiscordClient\Exceptions;
 
 use Exception;
 

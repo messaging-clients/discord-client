@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\EasyHttp\DiscordClient\Unit;
+namespace Tests\MessagingClients\DiscordClient\Unit;
 
 use Faker\Factory;
 use Faker\Generator;

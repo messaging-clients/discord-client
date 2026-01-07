@@ -46,9 +46,9 @@ The `DiscordClient` requires an `Authorization` object to authenticate requests.
 Once you have configured your authorization, pass it to the `DiscordClient` constructor:
 
 ```php
-use EasyHttp\DiscordClient\Authorization;
-use EasyHttp\DiscordClient\Constants\AuthorizationType;
-use EasyHttp\DiscordClient\DiscordClient;
+use MessagingClients\DiscordClient\Authorization;
+use MessagingClients\DiscordClient\Constants\AuthorizationType;
+use MessagingClients\DiscordClient\DiscordClient;
 
 $authorization = new Authorization();
 // Configure authorization (see methods below)
@@ -75,9 +75,9 @@ Bot tokens are used when you want to authenticate as a bot user. This is the mos
 **Example:**
 
 ```php
-use EasyHttp\DiscordClient\Authorization;
-use EasyHttp\DiscordClient\Constants\AuthorizationType;
-use EasyHttp\DiscordClient\DiscordClient;
+use MessagingClients\DiscordClient\Authorization;
+use MessagingClients\DiscordClient\Constants\AuthorizationType;
+use MessagingClients\DiscordClient\DiscordClient;
 
 $authorization = new Authorization();
 $authorization->setAuthorization(AuthorizationType::BOT_TOKEN, 'your-bot-token-here');
@@ -108,9 +108,9 @@ Bearer tokens are obtained through OAuth2 client credentials flow. This method i
 **Example:**
 
 ```php
-use EasyHttp\DiscordClient\Authorization;
-use EasyHttp\DiscordClient\Constants\AuthorizationType;
-use EasyHttp\DiscordClient\DiscordClient;
+use MessagingClients\DiscordClient\Authorization;
+use MessagingClients\DiscordClient\Constants\AuthorizationType;
+use MessagingClients\DiscordClient\DiscordClient;
 
 // Configure authorization using client credentials
 $authorization = new Authorization();

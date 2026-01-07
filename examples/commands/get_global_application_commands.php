@@ -2,9 +2,9 @@
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
-use EasyHttp\DiscordClient\Authorization;
-use EasyHttp\DiscordClient\Constants\AuthorizationType;
-use EasyHttp\DiscordClient\DiscordClient;
+use MessagingClients\DiscordClient\Authorization;
+use MessagingClients\DiscordClient\Constants\AuthorizationType;
+use MessagingClients\DiscordClient\DiscordClient;
 
 $token = 'your-bot-or-bearer-token-here';
 $applicationId = 'your-application-id-here';
