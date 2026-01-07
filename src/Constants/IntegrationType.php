@@ -1,6 +1,6 @@
 <?php
 
-namespace EasyHttp\DiscordClient\Constants;
+namespace MessagingClients\DiscordClient\Constants;
 
 enum IntegrationType: int
 {

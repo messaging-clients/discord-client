@@ -1,14 +1,14 @@
 <?php
 
-namespace Integration\DiscordClient;
+namespace Tests\MessagingClients\DiscordClient\Integration\DiscordClient;
 
-use EasyHttp\DiscordClient\Authorization;
-use EasyHttp\DiscordClient\DiscordClient;
+use MessagingClients\DiscordClient\Authorization;
+use MessagingClients\DiscordClient\DiscordClient;
 use EasyHttp\MockBuilder\HttpMock;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
-use Tests\EasyHttp\DiscordClient\Integration\IntegrationTestCase;
+use Tests\MessagingClients\DiscordClient\Integration\IntegrationTestCase;
 
 #[CoversClass(DiscordClient::class)]
 #[UsesClass(Authorization::class)]

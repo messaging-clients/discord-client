@@ -1,15 +1,15 @@
 <?php
 
-namespace EasyHttp\DiscordClient;
+namespace MessagingClients\DiscordClient;
 
 use EasyHttp\Contracts\Contracts\EasyClientContract;
 use EasyHttp\Contracts\Contracts\HttpClientRequest;
 use EasyHttp\Contracts\Contracts\HttpClientResponse;
-use EasyHttp\DiscordClient\Constants\AuthorizationType;
-use EasyHttp\DiscordClient\Exceptions\MissingAuthorizationTypeException;
-use EasyHttp\DiscordClient\Exceptions\MissingClientIdException;
-use EasyHttp\DiscordClient\Exceptions\MissingClientSecretException;
-use EasyHttp\DiscordClient\Exceptions\MissingTokenException;
+use MessagingClients\DiscordClient\Constants\AuthorizationType;
+use MessagingClients\DiscordClient\Exceptions\MissingAuthorizationTypeException;
+use MessagingClients\DiscordClient\Exceptions\MissingClientIdException;
+use MessagingClients\DiscordClient\Exceptions\MissingClientSecretException;
+use MessagingClients\DiscordClient\Exceptions\MissingTokenException;
 use EasyHttp\GuzzleAdapter\GuzzleClient;
 
 class DiscordClient

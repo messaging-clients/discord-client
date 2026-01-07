@@ -2,8 +2,8 @@
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
-use EasyHttp\DiscordClient\Authorization;
-use EasyHttp\DiscordClient\DiscordClient;
+use MessagingClients\DiscordClient\Authorization;
+use MessagingClients\DiscordClient\DiscordClient;
 
 $clientId = 'your-client-id-here';
 $clientSecret = 'your-client-secret-here';

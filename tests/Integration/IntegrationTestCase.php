@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\EasyHttp\DiscordClient\Integration;
+namespace Tests\MessagingClients\DiscordClient\Integration;
 
 use EasyHttp\MockBuilder\MockBuilder;
 use Faker\Factory;

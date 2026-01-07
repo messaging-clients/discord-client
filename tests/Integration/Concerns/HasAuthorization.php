@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\EasyHttp\DiscordClient\Integration\Concerns;
+namespace Tests\MessagingClients\DiscordClient\Integration\Concerns;
 
-use EasyHttp\DiscordClient\Authorization;
-use EasyHttp\DiscordClient\Constants\AuthorizationType;
-use EasyHttp\DiscordClient\DiscordClient;
-use EasyHttp\DiscordClient\Exceptions\MissingAuthorizationTypeException;
-use EasyHttp\DiscordClient\Exceptions\MissingTokenException;
+use MessagingClients\DiscordClient\Authorization;
+use MessagingClients\DiscordClient\Constants\AuthorizationType;
+use MessagingClients\DiscordClient\DiscordClient;
+use MessagingClients\DiscordClient\Exceptions\MissingAuthorizationTypeException;
+use MessagingClients\DiscordClient\Exceptions\MissingTokenException;
 use EasyHttp\MockBuilder\HttpMock;
 use Faker\Factory;
 use PHPUnit\Framework\Attributes\CoversClass;

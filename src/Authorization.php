@@ -1,8 +1,8 @@
 <?php
 
-namespace EasyHttp\DiscordClient;
+namespace MessagingClients\DiscordClient;
 
-use EasyHttp\DiscordClient\Constants\AuthorizationType;
+use MessagingClients\DiscordClient\Constants\AuthorizationType;
 
 class Authorization
 {
