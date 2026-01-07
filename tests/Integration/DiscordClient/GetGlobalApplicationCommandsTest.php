@@ -70,4 +70,3 @@ class GetGlobalApplicationCommandsTest extends IntegrationTestCase
         $client->getGlobalApplicationCommands($applicationId);
     }
 }
-
