@@ -125,6 +125,38 @@ class DiscordClient
         return $this->client->execute();
     }
 
+    /**
+     * Creates a new guild-specific application command.
+     *
+     * Guild commands are specific to a guild and can be used to create commands
+     * that are only available in specific servers.
+     *
+     * @param string $applicationId The application ID
+     * @param string $guildId The guild ID where the command will be created
+     * @param array $command The command data structure
+     * @return HttpClientResponse
+     * @throws MissingAuthorizationTypeException
+     * @throws MissingTokenException
+     */
+    public function createGuildApplicationCommand(
+        string $applicationId,
+        string $guildId,
+        array $command
+    ): HttpClientResponse {
+        $this->client
+            ->prepareRequest(
+                'POST',
+                $this->baseUri . '/applications/' . $applicationId . '/guilds/' . $guildId . '/commands'
+            )
+            ->setHeader('Content-Type', 'application/json');
+
+        $this->withAuthorization();
+
+        $this->client->getRequest()->setJson($command);
+
+        return $this->client->execute();
+    }
+
     protected function setBearerToken(string $token): HttpClientRequest
     {
         return $this->client->getRequest()
