@@ -3,8 +3,7 @@
 namespace Tests\MessagingClients\DiscordClient\Integration\DiscordClient;
 
 use MessagingClients\DiscordClient\Authorization;
-use MessagingClients\DiscordClient\Constants\IntegrationType;
-use MessagingClients\DiscordClient\Constants\InteractionContextType;
+use MessagingClients\DiscordClient\Constants\ApplicationCommandType;
 use MessagingClients\DiscordClient\DiscordClient;
 use EasyHttp\MockBuilder\HttpMock;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -32,9 +31,7 @@ class CreateGuildApplicationCommandTest extends IntegrationTestCase
         $command = [
             'name' => $name,
             'description' => 'A guild-specific command created via PHP SDK',
-            'type' => 1,
-            'integration_types' => [0, 1],
-            'contexts' => [0, 1, 2]
+            'type' => ApplicationCommandType::CHAT_INPUT->value,
         ];
 
         $this->builder
@@ -50,16 +47,7 @@ class CreateGuildApplicationCommandTest extends IntegrationTestCase
                         'version' => $this->faker->numerify('###################'),
                         'name' => $name,
                         'description' => 'A guild-specific command created via PHP SDK',
-                        'type' => 1,
-                        'integration_types' => [
-                            IntegrationType::GUILD_INSTALL->value,
-                            IntegrationType::USER_INSTALL->value
-                        ],
-                        'contexts' => [
-                            InteractionContextType::GUILD->value,
-                            InteractionContextType::BOT_DM->value,
-                            InteractionContextType::PRIVATE_CHANNEL->value
-                        ]
+                        'type' => ApplicationCommandType::CHAT_INPUT->value,
                     ]
                 );
 
@@ -78,7 +66,7 @@ class CreateGuildApplicationCommandTest extends IntegrationTestCase
         $command = [
             'name' => $this->faker->word(),
             'description' => 'A guild-specific command created via PHP SDK',
-            'type' => 1,
+            'type' => ApplicationCommandType::CHAT_INPUT->value,
         ];
 
         $client->createGuildApplicationCommand($applicationId, $guildId, $command);

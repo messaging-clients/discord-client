@@ -3,6 +3,7 @@
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
 use MessagingClients\DiscordClient\Authorization;
+use MessagingClients\DiscordClient\Constants\ApplicationCommandType;
 use MessagingClients\DiscordClient\Constants\AuthorizationType;
 use MessagingClients\DiscordClient\DiscordClient;
 
@@ -20,9 +21,7 @@ $client = new DiscordClient($authorization);
 $command = [
     'name' => 'guild-command',
     'description' => 'A guild-specific command created via PHP SDK',
-    'type' => 1,
-    'integration_types' => [0, 1],
-    'contexts' => [0, 1, 2]
+    'type' => ApplicationCommandType::CHAT_INPUT->value,
 ];
 
 $response = $client->createGuildApplicationCommand($applicationId, $guildId, $command);
