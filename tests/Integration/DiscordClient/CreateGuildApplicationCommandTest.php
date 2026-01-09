@@ -43,11 +43,12 @@ class CreateGuildApplicationCommandTest extends IntegrationTestCase
                 ->json(
                     $jsonResponse = [
                         'id' => $commandId,
+                        'type' => ApplicationCommandType::CHAT_INPUT->value,
                         'application_id' => $applicationId,
                         'version' => $this->faker->numerify('###################'),
+                        'guild_id' => $guildId,
                         'name' => $name,
                         'description' => 'A guild-specific command created via PHP SDK',
-                        'type' => ApplicationCommandType::CHAT_INPUT->value,
                     ]
                 );
 
