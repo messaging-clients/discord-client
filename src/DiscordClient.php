@@ -138,8 +138,11 @@ class DiscordClient
      * @throws MissingAuthorizationTypeException
      * @throws MissingTokenException
      */
-    public function createGuildApplicationCommand(string $applicationId, string $guildId, array $command): HttpClientResponse
-    {
+    public function createGuildApplicationCommand(
+        string $applicationId,
+        string $guildId,
+        array $command
+    ): HttpClientResponse {
         $this->client
             ->prepareRequest(
                 'POST',
